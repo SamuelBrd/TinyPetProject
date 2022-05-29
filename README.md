@@ -1,8 +1,10 @@
-# webandcloud
+# Projet Web and Cloud
 
-**Be sure your maven has access to the web**
-* you should have file ~/.m2/settings.xml
-* otherwise cp ~molli-p/.m2/settings.xml ~/.m2/
+**Projet réalisé par : Paul-Adrien LECOQ, PERRIN Maxime, BRIAND Samuel**
+
+**Ce projet universitaire avait pour but de nous initier à la plateforme cloud de Google. A travers ce projet, nous avons créé un site référançant des pétitions. Il devait notamment être possible d'ajouter des pétitions et d'en signer en se conenctant avec un compte google**
+
+**Ce fichier Readme fait état des lieux des fonctionnalités disponibles ou non sur l'application, ainsi que les "Kinds" Google datastore utilisés sur notre application**
 
 ```
 molli-p@remote:~/.m2$ cat settings.xml
