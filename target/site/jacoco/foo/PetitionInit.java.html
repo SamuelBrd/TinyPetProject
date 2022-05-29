@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PetitionInit.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WebAndCloud</a> &gt; <a href="index.source.html" class="el_package">foo</a> &gt; <span class="el_source">PetitionInit.java</span></div><h1>PetitionInit.java</h1><pre class="source lang-java linenums">package foo;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+
+import com.google.appengine.api.datastore.Entity;
+
+@WebServlet(name = &quot;PetInit&quot;, urlPatterns = { &quot;/petitionInit&quot; })
+<span class="nc" id="L24">public class PetitionInit extends HttpServlet {</span>
+
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		String id_user, name_tag;
+<span class="nc" id="L30">		response.setContentType(&quot;text/html&quot;);</span>
+<span class="nc" id="L31">		response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+
+<span class="nc" id="L33">		Random r = new Random();</span>
+<span class="nc" id="L34">		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();</span>
+
+		// Create users
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		for (int i = 0; i &lt; 30; i++) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">			for (int j = 0; j &lt; 10; j++) {</span>
+<span class="nc" id="L39">				String userId= i + &quot;&quot; +j;</span>
+<span class="nc" id="L40">				Entity e = new Entity(&quot;User&quot;, userId);</span>
+<span class="nc" id="L41">				e.setProperty(&quot;nom&quot;, &quot;Mon nom est &quot; + j);</span>
+<span class="nc" id="L42">				e.setProperty(&quot;prenom&quot;, &quot;Mon prénom est &quot; + j);</span>
+<span class="nc" id="L43">				e.setProperty(&quot;email&quot;, &quot;Mon adresse mail est &quot; + j);</span>
+<span class="nc" id="L44">				datastore.put(e);</span>
+<span class="nc" id="L45">				response.getWriter().print(&quot;&lt;li&gt; created user: &quot; + e.getKey() + &quot;&lt;br&gt;&quot;);</span>
+				
+				// Create petition
+<span class="nc" id="L48">				int nbMaxPetition = r.nextInt(5);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">				for (int k = 0; k &lt; nbMaxPetition; k++) {</span>
+					
+<span class="nc" id="L51">					String dateValue = RandomDate.randDate();</span>
+<span class="nc" id="L52">					long date_formated = 0;</span>
+					try {
+<span class="nc" id="L54">						date_formated = Long.MAX_VALUE-(new SimpleDateFormat(&quot;yyyy-MM-dd&quot;).parse(dateValue)).getTime();</span>
+<span class="nc" id="L55">					} catch (ParseException e1) {</span>
+<span class="nc" id="L56">						e1.printStackTrace();</span>
+					}
+<span class="nc" id="L58">					String petitionId=  date_formated + &quot;:&quot; + userId + &quot;:&quot; + k;</span>
+<span class="nc" id="L59">					Entity p = new Entity(&quot;Petition&quot;, petitionId);</span>
+<span class="nc" id="L60">					p.setProperty(&quot;theme&quot;, + j);</span>
+<span class="nc" id="L61">					p.setProperty(&quot;titre&quot;,+ j);</span>
+<span class="nc" id="L62">					p.setProperty(&quot;description&quot;, + j);</span>
+<span class="nc" id="L63">					p.setProperty(&quot;date&quot;, dateValue);</span>
+<span class="nc" id="L64">					p.setProperty(&quot;proprietaire&quot;,  userId);</span>
+<span class="nc" id="L65">                    p.setProperty(&quot;nomProprietaire&quot;,  j);</span>
+
+<span class="nc" id="L67">					int nbMaxSignataire = r.nextInt(30);</span>
+<span class="nc" id="L68">					int nbSignataire = 0;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">					while (nbSignataire &lt; nbMaxSignataire) {</span>
+<span class="nc" id="L70">						id_user = r.nextInt(50) + &quot;&quot; + r.nextInt(10);</span>
+<span class="nc" id="L71">						String s_date= RandomDate.randDate();</span>
+						try {
+<span class="nc" id="L73">							date_formated = Long.MAX_VALUE-(new SimpleDateFormat(&quot;yyyy-MM-dd&quot;).parse(s_date)).getTime();</span>
+<span class="nc" id="L74">						} catch (ParseException e1) {</span>
+<span class="nc" id="L75">							e1.printStackTrace();</span>
+						}
+
+                        // Create signature
+<span class="nc" id="L79">						Entity s = new Entity(&quot;Signature&quot;, userId+&quot;:&quot;+date_formated+&quot;:&quot;+petitionId);</span>
+<span class="nc" id="L80">						s.setProperty(&quot;petition&quot;,  petitionId);</span>
+<span class="nc" id="L81">						s.setProperty(&quot;proprietaire&quot;,  id_user);</span>
+<span class="nc" id="L82">						s.setProperty(&quot;date&quot;,  s_date);	</span>
+<span class="nc" id="L83">						datastore.put(s);</span>
+<span class="nc" id="L84">						nbSignataire++;</span>
+<span class="nc" id="L85">						response.getWriter().print(&quot;&lt;li&gt; signature created: &quot; + id_user + &quot;&lt;br&gt;&quot;);</span>
+						
+					}
+<span class="nc" id="L88">					p.setProperty(&quot;nbSignataire&quot;, nbSignataire);</span>
+<span class="nc" id="L89">					p.setProperty(&quot;objectifSignataire&quot;, r.nextInt(500)*100);</span>
+
+					// Create tag
+<span class="nc" id="L92">					HashSet&lt;String&gt; listTag = new HashSet&lt;String&gt;();</span>
+					
+<span class="nc" id="L94">					int nbMaxTag = r.nextInt(20);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">					while (listTag.size() &lt; nbMaxTag) {</span>
+<span class="nc" id="L96">						name_tag = &quot;name_tag&quot; + r.nextInt(50) + &quot;&quot; + r.nextInt(10);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">						if (!listTag.contains(name_tag)) {</span>
+<span class="nc" id="L98">						listTag.add(name_tag);</span>
+<span class="nc" id="L99">						response.getWriter().print(&quot;&lt;li&gt; tag created: &quot; + name_tag + &quot;&lt;br&gt;&quot;);</span>
+						}
+					}
+					
+<span class="nc" id="L103">					p.setProperty(&quot;tag&quot;, listTag);</span>
+					
+<span class="nc" id="L105">					datastore.put(p);</span>
+<span class="nc" id="L106">					response.getWriter().print(&quot;&lt;li&gt; created petition: &quot; + p.getKey() + &quot;&lt;br&gt;&quot;);</span>
+						
+				}
+			}
+		}
+<span class="nc" id="L111">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

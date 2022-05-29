@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+WebAndCloud,foo,PetitionEndpoint,874,0,22,0,168,0,24,0,13,0
+WebAndCloud,foo,PetitionServlet,353,0,12,0,60,0,8,0,2,0
+WebAndCloud,foo,PetitionQuery,149,0,4,0,26,0,4,0,2,0
+WebAndCloud,foo,PetitionRemoveAll,153,0,6,0,26,0,5,0,2,0
+WebAndCloud,foo,PetitionItem,39,0,0,0,13,0,1,0,1,0
+WebAndCloud,foo,RandomDate,140,0,4,0,18,0,6,0,4,0
+WebAndCloud,foo,HelloAppEngine,0,87,0,0,0,12,0,3,0,3
+WebAndCloud,foo,PetitionSigned,109,0,6,0,20,0,5,0,2,0
